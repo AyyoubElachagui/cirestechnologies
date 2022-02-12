@@ -1,23 +1,22 @@
-import 'package:cirestechnologies/app/sreens/obroad/onbroadingScreenData.dart';
+
+import 'package:cirestechnologies/app/screens/obroad/onbroading_screen_view_model.dart';
+import 'package:cirestechnologies/app/screens/obroad/widget/onbroading_widget.dart';
+import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/material.dart';
 
 
-class IntroductionScreen extends StatefulWidget {
-  final List<OnbroadingSreenData> onbordingDataList;
-  final MaterialPageRoute pageRoute;
+class OnbroadingScreens extends StatefulWidget {
+  final List<OnbroadingWidget> onbordingDataList;
+  final OnbroadingScreenViewModel viewModel;
 
-  IntroductionScreen({required this.onbordingDataList, required this.pageRoute});
-
-  void skipPage(BuildContext context) {
-    Navigator.push(context, pageRoute);
-  }
+  OnbroadingScreens({required this.onbordingDataList, required this.viewModel});
 
 
   @override
-  _IntroductionScreenState createState() => _IntroductionScreenState();
+  _OnbroadingScreensState createState() => _OnbroadingScreensState();
 }
 
-class _IntroductionScreenState extends State<IntroductionScreen> {
+class _OnbroadingScreensState extends State<OnbroadingScreens> {
   final PageController controller = new PageController();
   int currentPage = 0;
   bool lastPage = false;
@@ -39,7 +38,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       height: page == currentPage ? 8.0 : 4.0,
       width: page == currentPage ? 8.0 : 4.0,
       decoration: BoxDecoration(
-        color: page == currentPage ? Colors.grey : Colors.grey.withOpacity(0.4),
+        color: page == currentPage ? AppColors.gray : AppColors.gray.withOpacity(0.4),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -56,7 +55,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
         children: <Widget>[
           SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
           new Expanded(
-            flex: 7,
+            flex: 8,
             child: new PageView(
               children: widget.onbordingDataList,
               controller: controller,
@@ -85,19 +84,17 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 lastPage ? Container() : TextButton(
                   child: new Text(lastPage ? "" : "SKIP",
                       style: new TextStyle(
-                          color: Colors.grey,
+                          color: AppColors.gray,
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () => lastPage
                       ? null
-                      : widget.skipPage(
-                    context,
-                  ),
+                      : widget.viewModel.navigateToSingInPage()
                 ),
                 lastPage ? ElevatedButton(
                   style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+                      foregroundColor: MaterialStateProperty.all<Color>(AppColors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(AppColors.primary),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -105,17 +102,17 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                       )
                   ),
                   onPressed: (){
-
+                    widget.viewModel.navigateToSingInPage();
                   },
                   child: Text("GET STARTED"),
                 ) : TextButton(
                   child: new Text("NEXT",
                       style: new TextStyle(
-                          color: Colors.grey,
+                          color: AppColors.gray,
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0)),
                   onPressed: () => lastPage
-                      ? widget.skipPage(context)
+                      ? widget.viewModel.navigateToSingInPage()
                       : controller.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeIn),
