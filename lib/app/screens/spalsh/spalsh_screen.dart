@@ -1,4 +1,5 @@
 import 'package:cirestechnologies/app/screens/spalsh/spalsh_screen_view_model.dart';
+import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 1,),
       ),
     );
   }

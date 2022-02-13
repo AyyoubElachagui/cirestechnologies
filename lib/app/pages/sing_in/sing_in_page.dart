@@ -4,6 +4,7 @@ import 'package:cirestechnologies/app/pages/sing_in/sing_in_page_view_model.dart
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SingInPage extends StatefulWidget {
   final SingInPageViewModel viewModel;
@@ -15,12 +16,6 @@ class SingInPage extends StatefulWidget {
 }
 
 class _SingInPageState extends State<SingInPage> {
-  bool rememberMe = false;
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-
-  int _state = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +52,24 @@ class _SingInPageState extends State<SingInPage> {
                   height: 30,
                 ),
                 Form(
-                  key: _formKey,
+                  key: widget.viewModel.formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextFormField(
                         decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.gray),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.primary),
+                          ),
                           hintText: 'Username',
                           labelText: 'Username',
                           labelStyle:
                               TextStyle(fontSize: 16, color: AppColors.gray),
                         ),
-                        controller: _email,
+                        controller: widget.viewModel.username,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your username';
@@ -78,24 +79,31 @@ class _SingInPageState extends State<SingInPage> {
                       ),
                       SizedBox(height: 30),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                          hintText: 'Password',
-                          labelText: 'Password',
-                          labelStyle:
-                              TextStyle(fontSize: 16, color: AppColors.gray),
-                        ),
-                        obscureText: true,
-                        controller: _password,
+                        cursorColor: AppColors.primary,
+                        controller: widget.viewModel.password,
+                        obscureText: widget.viewModel.passwordVisible,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
-                          } else if (value.length < 2) {
-                            return 'The password is shorter than 8 characters';
                           }
                           return null;
                         },
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.gray),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.primary),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          hintText: 'Password',
+                          labelText: 'Password',
+                          labelStyle: TextStyle(fontSize: 16, color: AppColors.gray),
+                          suffixIcon: IconButton(
+                            icon: Icon(widget.viewModel.passwordVisible ? Icons.visibility : Icons.visibility_off, color: AppColors.primary,),
+                            onPressed: () => widget.viewModel.showHidePassword(),
+                          ),
+                        ),
                       ),
                       SizedBox(height: 30),
                       Row(
@@ -105,13 +113,14 @@ class _SingInPageState extends State<SingInPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Checkbox(
-                                  value: rememberMe,
-                                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  value: widget.viewModel.rememberMe,
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
                                   onChanged: (newValue) {
                                     setState(() {
-                                      rememberMe = newValue!;
+                                      widget.viewModel.rememberMe = newValue!;
                                     });
                                   }),
                               Container(
@@ -128,7 +137,6 @@ class _SingInPageState extends State<SingInPage> {
                             "Forget password ?",
                             style: TextStyle(
                               color: AppColors.primary,
-
                             ),
                           )
                         ],
@@ -144,48 +152,23 @@ class _SingInPageState extends State<SingInPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              if (_state == 0) {
-                                animateButton();
-                              }
-                            }
-                          },
-                          child: _state == 0
-                              ? Text('LOGIN')
-                              : Container(
-                                  width: 100,
-                                  height: 30,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 5),
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.0,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
-                                  ),
-                                ),
+                          onPressed: () => widget.viewModel.login(context),
+                          child: Text('LOGIN'),
                         ),
                       ),
                       SizedBox(height: 15),
                       Center(
                         child: Container(
-                          child: Text.rich(
+                          child: Text.rich(TextSpan(children: [
                             TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Don't have one ? ",
-                                  style: TextStyle(
-                                      color: AppColors.gray),
-                                ),
-                                TextSpan(
-                                  text: " Sing up",
-                                  style: TextStyle(
-                                      color: AppColors.primary),
-                                ),
-
-                              ]
-                            )
-                          ),
+                              text: "Don't have one ? ",
+                              style: TextStyle(color: AppColors.gray),
+                            ),
+                            TextSpan(
+                              text: " Sing up",
+                              style: TextStyle(color: AppColors.primary),
+                            ),
+                          ])),
                         ),
                       )
                     ],
@@ -199,15 +182,4 @@ class _SingInPageState extends State<SingInPage> {
     );
   }
 
-  void animateButton() {
-    setState(() {
-      _state = 1;
-    });
-
-    Timer(Duration(milliseconds: 3300), () {
-      setState(() {
-        _state = 0;
-      });
-    });
-  }
 }

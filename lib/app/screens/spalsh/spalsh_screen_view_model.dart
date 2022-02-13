@@ -9,19 +9,26 @@ class SplashViewModel extends ChangeNotifier {
   SplashViewModel({
     required this.navigationService,
   });
-  void navigateToLoginPage() {
-    navigationService.navigateToAndMakeRoot(routeName: Routes.singIn);
-  }
+
 
   void navigateToOnbroadingPage() {
     navigationService.navigateToAndMakeRoot(routeName: Routes.onbroadingScreen);
   }
 
+  void navigateToLoginPage() {
+    navigationService.navigateToAndMakeRoot(routeName: Routes.singIn);
+  }
+
+  void navigateToHomePage() {
+    navigationService.navigateToAndMakeRoot(routeName: Routes.homePage);
+  }
+
   void defaultScrenn() async{
-    var token;
+    var onbroading , auth;
     await SharedPreferences.getInstance().then((prefValue) => {
-      token = prefValue.getBool('onbroading'),
+      onbroading = prefValue.getBool('onbroading'),
+      auth = prefValue.getBool('auth')
     });
-    token == null ? navigateToOnbroadingPage() : navigateToLoginPage();
+    onbroading == null ? navigateToOnbroadingPage() : auth == null ? navigateToLoginPage() : navigateToHomePage();
   }
 }

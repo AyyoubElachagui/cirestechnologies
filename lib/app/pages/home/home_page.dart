@@ -15,8 +15,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
+    return Scaffold(
+      body: Container(
         child: Center(
           child: Text("hhhhhhhhhhhhhhhhhh welcome to home page"),
         )

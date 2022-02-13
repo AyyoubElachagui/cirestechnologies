@@ -36,6 +36,8 @@ dependencies:
 
   #state management:
   provider: 5.0.0
+  #for use  snakBar
+  fluttertoast: ^8.0.8
 
 
   # The following adds the Cupertino Icons font to your application.
