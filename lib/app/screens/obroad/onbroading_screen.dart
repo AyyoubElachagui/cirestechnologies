@@ -47,7 +47,7 @@ class _OnbroadingScreensState extends State<OnbroadingScreens> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: new Color(0xFFFFFFFF),
+      color: AppColors.white,
       padding: const EdgeInsets.all(20.0),
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

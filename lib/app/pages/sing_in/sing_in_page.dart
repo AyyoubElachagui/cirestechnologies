@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:cirestechnologies/app/pages/sing_in/sing_in_page_view_model.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SingInPage extends StatefulWidget {
   final SingInPageViewModel viewModel;
@@ -22,6 +19,7 @@ class _SingInPageState extends State<SingInPage> {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          color: AppColors.white,
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,

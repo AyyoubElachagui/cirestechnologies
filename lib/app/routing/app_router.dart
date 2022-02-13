@@ -1,4 +1,7 @@
 import 'package:cirestechnologies/app/pages/home/home_page_factory.dart';
+import 'package:cirestechnologies/app/pages/news_detail/news_detail_page_factory.dart';
+import 'package:cirestechnologies/app/pages/profile/profile_page_factory.dart';
+import 'package:cirestechnologies/app/pages/search/search_page_factory.dart';
 import 'package:cirestechnologies/app/pages/sing_in/sing_in_page_factory.dart';
 import 'package:cirestechnologies/app/routing/routes.dart';
 import 'package:cirestechnologies/app/screens/obroad/onbroading_screen_factory.dart';
@@ -19,7 +22,19 @@ class AppRouter {
         break;
 
       case Routes.homePage:
-        page = HomePageFactory.buildScreen(settings);
+        page = HomePageFactory.buildPage(settings);
+        break;
+
+      case Routes.search:
+        page = SearchPageFactory.buildPage(settings);
+        break;
+
+      case Routes.profile:
+        page = ProfilePageFactory.buildPage(settings);
+        break;
+
+      case Routes.newsDetail:
+        page = NewsDetailPageFactory.buildPage(settings);
         break;
 
       default:

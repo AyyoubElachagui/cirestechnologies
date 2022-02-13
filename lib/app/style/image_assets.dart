@@ -7,4 +7,15 @@ class ImageAssets{
   static const String onbroading_one = "${_pathOnbroading}/onbroad1.png";
   static const String onbroading_two = "${_pathOnbroading}/onbroad2.png";
   static const String onbroading_three = "${_pathOnbroading}/onbroad3.png";
+
+  /**
+   * Bottom Bar Icons path
+   */
+  static const String _pathIconsBottomBar = "assets/icons/";
+  static const String home = "${_pathIconsBottomBar}home.png";
+  static const String homeOutline = "${_pathIconsBottomBar}home_outline.png";
+  static const String search = "${_pathIconsBottomBar}search.png";
+  static const String searchOutline = "${_pathIconsBottomBar}search_outline.png";
+  static const String user = "${_pathIconsBottomBar}user.png";
+  static const String userOutline = "${_pathIconsBottomBar}user_outline.png";
 }

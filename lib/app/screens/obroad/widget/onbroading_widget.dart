@@ -1,3 +1,4 @@
+import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class OnbroadingWidget extends StatefulWidget {
@@ -18,7 +19,7 @@ class _OnbroadingWidgetState extends State<OnbroadingWidget> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        color: Colors.white,
+        color: AppColors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

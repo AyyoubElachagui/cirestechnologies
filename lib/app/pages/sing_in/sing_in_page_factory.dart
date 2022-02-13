@@ -1,5 +1,3 @@
-import 'package:cirestechnologies/app/pages/home/home_page.dart';
-import 'package:cirestechnologies/app/pages/home/home_page_view_model.dart';
 import 'package:cirestechnologies/app/pages/sing_in/sing_in_page.dart';
 import 'package:cirestechnologies/app/pages/sing_in/sing_in_page_view_model.dart';
 import 'package:cirestechnologies/app/routing/navigation_service.dart';
@@ -8,7 +6,6 @@ import 'package:provider/provider.dart';
 
 class SingInFactory {
   static Widget buildScreen(RouteSettings? settings) {
-    MaterialPageRoute? pageRoute;
     return ChangeNotifierProvider<SingInPageViewModel>(
       create: (context) {
         return SingInPageViewModel(
