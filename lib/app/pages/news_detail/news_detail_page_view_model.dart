@@ -6,13 +6,15 @@ import 'package:flutter/cupertino.dart';
 class NewsDetailPageViewModel extends ChangeNotifier {
   final NavigationService navigationService;
   final NewsModel newsDetail;
+  final String categoryTitle;
 
   NewsDetailPageViewModel({
     required this.navigationService,
     required this.newsDetail,
+    required this.categoryTitle,
   });
 
-  void navigateToHomePage() {
-    navigationService.navigateToAndMakeRoot(routeName: Routes.onbroadingScreen);
+  void navigateToBack() {
+    navigationService.navigateBack();
   }
 }

@@ -79,7 +79,7 @@ class _SingInPageState extends State<SingInPage> {
                       TextFormField(
                         cursorColor: AppColors.primary,
                         controller: widget.viewModel.password,
-                        obscureText: widget.viewModel.passwordVisible,
+                        obscureText: !widget.viewModel.passwordVisible,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
@@ -98,7 +98,7 @@ class _SingInPageState extends State<SingInPage> {
                           labelText: 'Password',
                           labelStyle: TextStyle(fontSize: 16, color: AppColors.gray),
                           suffixIcon: IconButton(
-                            icon: Icon(widget.viewModel.passwordVisible ? Icons.visibility : Icons.visibility_off, color: AppColors.primary,),
+                            icon: Icon(!widget.viewModel.passwordVisible ? Icons.visibility : Icons.visibility_off, color: AppColors.primary,),
                             onPressed: () => widget.viewModel.showHidePassword(),
                           ),
                         ),

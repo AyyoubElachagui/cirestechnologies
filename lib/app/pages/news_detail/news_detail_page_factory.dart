@@ -7,13 +7,16 @@ import 'package:provider/provider.dart';
 
 class NewsDetailPageFactory {
   static Widget buildPage(RouteSettings? settings) {
-    NewsModel data = settings!.arguments as NewsModel;
+    final data = settings!.arguments as List;
+    String categoryTitle = data[0];
+    NewsModel newsDetail = data[1];
     return ChangeNotifierProvider<NewsDetailPageViewModel>(
       create: (context) {
         return NewsDetailPageViewModel(
           navigationService:
           Provider.of<NavigationService>(context, listen: false),
-          newsDetail: data
+          newsDetail: newsDetail,
+          categoryTitle: categoryTitle,
         );
       },
       child: Consumer<NewsDetailPageViewModel>(

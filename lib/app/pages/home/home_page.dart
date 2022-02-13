@@ -1,12 +1,14 @@
 import 'package:cirestechnologies/app/pages/home/home_page_view_model.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:cirestechnologies/app/widgets/bottom_menu/bottom_menu_view_factory.dart';
+import 'package:cirestechnologies/app/widgets/home_news_items/home_news_items_widget.dart';
+import 'package:cirestechnologies/app/widgets/loading/loading_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
-
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   final HomePageViewModel viewModel;
@@ -18,140 +20,154 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.viewModel.getListNewsStartUp(context: context);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      await widget.viewModel.getListNewsStartUp(context: context);
+      await widget.viewModel.getListNewsScience(context: context);
+      await widget.viewModel.getListNewsTechnology(context: context);
+      await widget.viewModel.getListNewsSports(context: context);
+      await widget.viewModel.getListNewsBusiness(context: context);
+      await widget.viewModel.getListNewsAutomobile(context: context);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.viewModel.listNewsStarUp);
     return Scaffold(
       bottomNavigationBar: BottomMenuViewFactory(),
-      body: widget.viewModel.listNewsStarUp.isEmpty == false ? Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(height: 90),
-                Center(
-                  child: Text("hhhhhhhhhhhhhhhhhh welcome to home page"),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: PageScrollPhysics(),
-                  child: Row(
-                    children: [
-                      ...widget.viewModel.listNewsStarUp.map((e) {
-                        ///.parse(e.date!
-                        String firstDate = e.date!.split(",")[0];
-                        String day = firstDate.split(' ')[0];
-                        String monthName = firstDate.split(' ')[1];
-                        int month = 0;
-                        switch(monthName){
-                          case "Jan" : month = 1;
-                          break;
-                          case "Feb" : month = 2;
-                          break;
-                          case "Mar" : month = 3;
-                          break;
-                          case "Apr" : month = 4;
-                          break;
-                          case "May" : month = 5;
-                          break;
-                          case "Jun" : month = 6;
-                          break;
-                          case "Jul" : month = 7;
-                          break;
-                          case "Aug" : month = 8;
-                          break;
-                          case "Sep" : month = 9;
-                          break;
-                          case "Oct" : month = 10;
-                          break;
-                          case "Nov" : month = 11;
-                          break;
-                          case "Dec" : month = 12;
-                          break;
-                        }
-                        String year = firstDate.split(' ')[2];
-                        var date = Jiffy(year+"-"+month.toString()+"-"+day).format("yyyy-MM-dd");
-                        var dateString = Jiffy(date, "yyyy-MM-dd").startOf(Units.DAY).fromNow().toString();
-                        return InkWell(
-                          onTap: (){
-                            widget.viewModel.navigateToNewsDetail(model: e);
-                          },
-                          child: Container(
-                            width: 210,
-                            margin: EdgeInsets.only(right: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+      body: widget.viewModel.listNewsStarUp.isEmpty == false
+          ? Container(
+              color: AppColors.white,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    widget.viewModel.listNewsScience != null &&
+                            widget.viewModel.listNewsScience.length > 0
+                        ? Container(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.54,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
+                              image: DecorationImage(
+                                image: NetworkImage(widget
+                                    .viewModel.listNewsScience[1].imageUrl!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Stack(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(e.imageUrl!, width: 210, height: 100, fit: BoxFit.cover,),
+                                Positioned(
+                                  top: 40,
+                                  left: 20,
+                                  child: InkWell(
+                                      onTap: () {
+                                        SharedPreferences.getInstance()
+                                            .then((value) => value.clear());
+                                        widget.viewModel
+                                            .navigateToOnbroadingPage();
+                                      },
+                                      child: Icon(
+                                        Icons.menu,
+                                        color: AppColors.white,
+                                        size: 35,
+                                      )),
                                 ),
-                                SizedBox(height: 10,),
-                                Text(
-                                    e.title!,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 13
-                                    )
+                                Positioned(
+                                  top: 120,
+                                  left: 20,
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.white.withOpacity(0.5),
+                                    ),
+                                    child: Text("News of the day",
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 16)),
+                                  ),
                                 ),
-                                SizedBox(height: 5,),
-                                Text(
-                                    dateString,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 11,
-                                        color: AppColors.gray.withOpacity(0.5)
-                                    )
+                                Positioned(
+                                  top: 210,
+                                  left: 20,
+                                  child: Container(
+                                    width: 280,
+                                    child: Text(
+                                        widget.viewModel.listNewsScience
+                                                    .length >
+                                                0
+                                            ? widget.viewModel
+                                                .listNewsScience[1].title!
+                                            : "",
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 22)),
+                                  ),
                                 ),
-                                SizedBox(height: 5,),
-                                Text(
-                                    "by "+e.author!,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 11,
-                                        color: AppColors.gray.withOpacity(0.5)
-                                    )
-                                ),
-
-
-                                /*InkWell(
-                                onTap: (){
-                                  widget.viewModel.navigateToNewsDetail(model: e);
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(e.author ?? ""),
-                                    Text(e.time ?? ""),
-                                  ],
-                                ),
-                              ),*/
-                                SizedBox(width: 20,)
+                                Positioned(
+                                  bottom: 30,
+                                  left: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Learn More",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
+                                            color: AppColors.white),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_right_alt,
+                                        color: AppColors.white,
+                                      )
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        );
-                      }).toList()
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      )  : Container(child: Center(child: CircularProgressIndicator(color: AppColors.primary, strokeWidth: 1,),),),
+                          )
+                        : LoadingWidget(),
+                    HomeNewsItems(
+                      title: "Sciences",
+                      listNews: widget.viewModel.listNewsScience,
+                    ),
+                    HomeNewsItems(
+                      title: "Busincess",
+                      listNews: widget.viewModel.listNewsBusiness,
+                    ),
+                    HomeNewsItems(
+                      title: "Sports",
+                      listNews: widget.viewModel.listNewsSport,
+                    ),
+                    HomeNewsItems(
+                      title: "Technology",
+                      listNews: widget.viewModel.listNewsTechnology,
+                    ),
+                    HomeNewsItems(
+                      title: "Start up",
+                      listNews: widget.viewModel.listNewsStarUp,
+                    ),
+                    HomeNewsItems(
+                      title: "Auto mobile",
+                      listNews: widget.viewModel.listNewsAutoMobile,
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : LoadingWidget(),
     );
   }
 }

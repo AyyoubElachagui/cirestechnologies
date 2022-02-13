@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Acaps',
       navigatorKey: NavigationService.navigatorKey,
       onGenerateRoute: AppRouter.generateRoute,

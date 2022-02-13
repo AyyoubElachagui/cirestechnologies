@@ -15,5 +15,31 @@ class NewsRepository{
     Map<String, dynamic> data =  await apiClient.get(apiPath: 'startup');
     return data;
   }
+
+  Future<Map<String, dynamic>> getNewsScience() async{
+    Map<String, dynamic> data =  await apiClient.get(apiPath: 'science');
+    return data;
+  }
+
+  Future<Map<String, dynamic>> getNewsBusiness() async{
+    Map<String, dynamic> data =  await apiClient.get(apiPath: 'business');
+    return data;
+  }
+
+  Future<Map<String, dynamic>> getNewsSports() async{
+    Map<String, dynamic> data =  await apiClient.get(apiPath: 'sports');
+    return data;
+  }
+
+  Future<Map<String, dynamic>> getNewsTechnology() async{
+    Map<String, dynamic> data =  await apiClient.get(apiPath: 'technology');
+    return data;
+  }
+
+  Future<Map<String, dynamic>> getNewsAutomobile() async{
+    Map<String, dynamic> data =  await apiClient.get(apiPath: 'automobile');
+    return data;
+  }
+
 }
 
