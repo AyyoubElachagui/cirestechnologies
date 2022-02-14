@@ -1,4 +1,6 @@
 import 'package:cirestechnologies/app/pages/home/home_page_factory.dart';
+import 'package:cirestechnologies/app/pages/list_news_category/list_news_category_page_factory.dart';
+import 'package:cirestechnologies/app/pages/main_app.dart';
 import 'package:cirestechnologies/app/pages/news_detail/news_detail_page_factory.dart';
 import 'package:cirestechnologies/app/pages/profile/profile_page_factory.dart';
 import 'package:cirestechnologies/app/pages/search/search_page_factory.dart';
@@ -21,8 +23,16 @@ class AppRouter {
         page = SingInFactory.buildScreen(settings);
         break;
 
+      case Routes.mainApp:
+        page = MainApp();
+        break;
+
       case Routes.homePage:
         page = HomePageFactory.buildPage(settings);
+        break;
+
+      case Routes.listNews:
+        page = ListNewsCategoryPageFactory.buildPage(settings);
         break;
 
       case Routes.search:

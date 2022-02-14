@@ -1,6 +1,6 @@
+import 'package:cirestechnologies/app/screens/bottom_menu/bottom_menu_view_model.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:cirestechnologies/app/style/image_assets.dart';
-import 'package:cirestechnologies/app/widgets/bottom_menu/bottom_menu_view_model.dart';
 import 'package:flutter/material.dart';
 
 class BottomMenuView extends StatefulWidget {
@@ -22,13 +22,13 @@ class _BottomMenuViewState extends State<BottomMenuView> {
     required String iconUnactive,
   }) {
     return GestureDetector(
-      onTap: () => widget.viewModel.navigateToPage(index),
+      onTap: ()  => widget.viewModel.navigateToPage(index),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Image.asset(
             widget.viewModel.isIndexSelected(index) ? iconActive : iconUnactive,
           color: AppColors.black,
-          height: 20,
+          height: 25,
         ),
       ),
     );

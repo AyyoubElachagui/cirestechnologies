@@ -30,7 +30,7 @@ class SingInPageViewModel extends ChangeNotifier {
     }
     SharedPreferences.getInstance().then((value) => value.setBool("auth", true));
     username.text == "muser" && password.text == "mpassw0rd" ?
-        navigateToHomePage()
+    navigateToMainAppPage()
         : username.text == "muser02" && password.text == "mpassword" ?
           toastUtils.launchToast(context: context, title: "Ce compte est bloqué", icon: Icons.block_outlined, backgroundColor: Colors.red) :
           toastUtils.launchToast(context: context, title: "Erreur", icon: Icons.block_outlined, backgroundColor: Colors.deepOrange);
@@ -38,8 +38,8 @@ class SingInPageViewModel extends ChangeNotifier {
 
   }
 
-  void navigateToHomePage(){
-    navigationService.navigateToAndMakeRoot(routeName: Routes.homePage);
+  void navigateToMainAppPage(){
+    navigationService.navigateToAndMakeRoot(routeName: Routes.mainApp);
   }
 
   void navigateToOnbroadingScreenPage() {

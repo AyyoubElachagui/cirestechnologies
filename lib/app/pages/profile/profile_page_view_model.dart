@@ -9,7 +9,11 @@ class ProfilePageViewModel extends ChangeNotifier {
     required this.navigationService,
   });
 
-  void navigateToHomePage() {
+  void navigateToOnbroading(){
     navigationService.navigateToAndMakeRoot(routeName: Routes.onbroadingScreen);
+  }
+
+  void navigateToSingIn(){
+    navigationService.navigateToAndMakeRoot(routeName: Routes.singIn);
   }
 }

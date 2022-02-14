@@ -22,14 +22,6 @@ class HomePageViewModel extends ChangeNotifier {
   List<NewsModel> listNewsTechnology = [];
   List<NewsModel> listNewsBusiness = [];
 
-  void init({required BuildContext context}){
-    getListNewsStartUp(context: context);
-    getListNewsScience(context: context);
-    getListNewsTechnology(context: context);
-    getListNewsSports(context: context);
-    getListNewsBusiness(context: context);
-    getListNewsAutomobile(context: context);
-  }
 
   Future getListNewsStartUp({required BuildContext context}) async {
     final data = await newsRepository.getNewsStartUp();

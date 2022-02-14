@@ -17,6 +17,7 @@ class _SingInPageState extends State<SingInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Container(
           color: AppColors.white,

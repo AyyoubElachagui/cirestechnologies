@@ -57,7 +57,7 @@ class _OnbroadingWidgetState extends State<OnbroadingWidget> {
               height: 12.0,
             ),
             SizedBox(
-              height: 12.0,
+              height: 10.0,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -65,6 +65,7 @@ class _OnbroadingWidgetState extends State<OnbroadingWidget> {
                 widget.desc,
                 softWrap: true,
                 textAlign: TextAlign.center,
+                maxLines: 2,
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14),
               ),
             ),

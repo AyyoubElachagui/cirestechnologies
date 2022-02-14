@@ -1,16 +1,13 @@
-
 import 'package:cirestechnologies/app/screens/obroad/onbroading_screen_view_model.dart';
 import 'package:cirestechnologies/app/screens/obroad/widget/onbroading_widget.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/material.dart';
-
 
 class OnbroadingScreens extends StatefulWidget {
   final List<OnbroadingWidget> onbordingDataList;
   final OnbroadingScreenViewModel viewModel;
 
   OnbroadingScreens({required this.onbordingDataList, required this.viewModel});
-
 
   @override
   _OnbroadingScreensState createState() => _OnbroadingScreensState();
@@ -38,7 +35,9 @@ class _OnbroadingScreensState extends State<OnbroadingScreens> {
       height: page == currentPage ? 8.0 : 4.0,
       width: page == currentPage ? 8.0 : 4.0,
       decoration: BoxDecoration(
-        color: page == currentPage ? AppColors.gray : AppColors.gray.withOpacity(0.4),
+        color: page == currentPage
+            ? AppColors.gray
+            : AppColors.gray.withOpacity(0.4),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -48,13 +47,15 @@ class _OnbroadingScreensState extends State<OnbroadingScreens> {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.white,
-      padding: const EdgeInsets.all(20.0),
-      child: new Column(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
-          new Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
+          ),
+          Expanded(
             flex: 8,
             child: new PageView(
               children: widget.onbordingDataList,
@@ -75,49 +76,55 @@ class _OnbroadingScreensState extends State<OnbroadingScreens> {
               ),
             ),
           ),
-          new Expanded(
+          Expanded(
             flex: 1,
-            child: new Row(
-              mainAxisAlignment: lastPage ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+            child: Row(
+              mainAxisAlignment: lastPage
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                lastPage ? Container() : TextButton(
-                  child: new Text(lastPage ? "" : "SKIP",
-                      style: new TextStyle(
-                          color: AppColors.gray,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0)),
-                  onPressed: () => lastPage
-                      ? null
-                      : widget.viewModel.navigateToSingInPage()
-                ),
-                lastPage ? ElevatedButton(
-                  style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(AppColors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(AppColors.primary),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                lastPage
+                    ? Container()
+                    : TextButton(
+                        child: Text(
+                          lastPage ? "" : "SKIP",
+                          style: TextStyle(
+                              color: AppColors.gray,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0),
+                        ),
+                        onPressed: () => lastPage
+                            ? null
+                            : widget.viewModel.navigateToSingInPage()),
+                lastPage
+                    ? ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                AppColors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                AppColors.primary),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
-                          )
+                            ))),
+                        onPressed: () {
+                          widget.viewModel.navigateToSingInPage();
+                        },
+                        child: Text("GET STARTED"),
                       )
-                  ),
-                  onPressed: (){
-                    widget.viewModel.navigateToSingInPage();
-                  },
-                  child: Text("GET STARTED"),
-                ) : TextButton(
-                  child: new Text("NEXT",
-                      style: new TextStyle(
-                          color: AppColors.gray,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0)),
-                  onPressed: () => lastPage
-                      ? widget.viewModel.navigateToSingInPage()
-                      : controller.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeIn),
-                )
-                ,
+                    : TextButton(
+                        child: Text("NEXT",
+                            style: TextStyle(
+                                color: AppColors.gray,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0)),
+                        onPressed: () => lastPage
+                            ? widget.viewModel.navigateToSingInPage()
+                            : controller.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeIn),
+                      ),
               ],
             ),
           ),

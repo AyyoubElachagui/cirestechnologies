@@ -9,6 +9,8 @@ class ImageAssets{
   static const String onbroading_three = "${_pathOnbroading}/onbroad3.png";
 
   static const String fakeUser = "assets/images/fake_user.jpg";
+  static const String fakeOne = "assets/images/fake_one.jpg";
+  static const String fakeTwo = "assets/images/fake_two.jpg";
 
   /**
    * Bottom Bar Icons path
