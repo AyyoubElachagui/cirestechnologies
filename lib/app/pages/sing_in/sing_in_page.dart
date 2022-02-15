@@ -63,6 +63,7 @@ class _SingInPageState extends State<SingInPage> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColors.primary),
                           ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                           hintText: 'Username',
                           labelText: 'Username',
                           labelStyle:

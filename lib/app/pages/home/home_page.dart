@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cirestechnologies/app/pages/home/home_page_view_model.dart';
 import 'package:cirestechnologies/app/screens/bottom_menu/bottom_menu_view_factory.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:cirestechnologies/app/widgets/home_news_items/home_news_items_widget.dart';
+import 'package:cirestechnologies/app/widgets/home_news_items/home_news_of_day_widget.dart';
 import 'package:cirestechnologies/app/widgets/loading/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   final HomePageViewModel viewModel;
@@ -36,113 +39,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.viewModel.listNewsStarUp.isNotEmpty &&
-            widget.viewModel.listNewsAutoMobile.isNotEmpty &&
-            widget.viewModel.listNewsBusiness.isNotEmpty &&
-            widget.viewModel.listNewsSport.isNotEmpty &&
-            widget.viewModel.listNewsTechnology.isNotEmpty &&
-            widget.viewModel.listNewsScience.isNotEmpty
+    return widget.viewModel.listNewsScience.isNotEmpty
         ? Container(
             color: AppColors.white,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  widget.viewModel.listNewsScience != null &&
-                          widget.viewModel.listNewsScience.length > 0
-                      ? Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.54,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                widget.viewModel.listNewsScience[1].imageUrl!,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 40,
-                                left: 20,
-                                child: IconButton(
-                                  onPressed: () {
-                                    /*SharedPreferences.getInstance()
-                                        .then((value) => value.clear());
-                                    widget.viewModel.navigateToOnbroadingPage();*/
-
-                                  },
-                                  icon: Icon(
-                                    Icons.menu,
-                                    color: AppColors.white,
-                                    size: 35,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 120,
-                                left: 20,
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: AppColors.white.withOpacity(0.5),
-                                  ),
-                                  child: Text("News of the day",
-                                      style: TextStyle(
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 16)),
-                                ),
-                              ),
-                              Positioned(
-                                top: 210,
-                                left: 20,
-                                child: Container(
-                                  width: 280,
-                                  child: Text(
-                                      widget.viewModel.listNewsScience.length >
-                                              0
-                                          ? widget.viewModel.listNewsScience[1]
-                                              .title!
-                                          : "",
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 22)),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 30,
-                                left: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Learn More",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                          color: AppColors.white),
-                                    ),
-                                    Icon(
-                                      Icons.arrow_right_alt,
-                                      color: AppColors.white,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      : LoadingWidget(),
+                  HomeNewsOfDayWidget(
+                    title: widget.viewModel.listNewsScience[1].title!,
+                    imageUrl: widget.viewModel.listNewsScience[1].imageUrl!,
+                  ),
                   HomeNewsItems(
                     title: "Sciences",
                     listNews: widget.viewModel.listNewsScience,

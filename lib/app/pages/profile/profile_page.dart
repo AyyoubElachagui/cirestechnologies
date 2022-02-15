@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(ImageAssets.fakeUser, width: 150, height: 150, fit: BoxFit.cover,),
+                child: Image.asset(ImageAssets.me, width: 150, height: 150, fit: BoxFit.cover,),
               ),
             ),
             SizedBox(height: 20,),

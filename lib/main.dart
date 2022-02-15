@@ -9,6 +9,8 @@ void main() async {
 
   final navigationService = NavigationService();
 
+  final GlobalKey<ScaffoldState> key = GlobalKey();
+
   final bottomMenuViewModel = BottomMenuViewModel(
     navigationService: navigationService,
     currentIndex: 0
@@ -20,6 +22,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: bottomMenuViewModel),
+        Provider.value(value: key),
         Provider.value(value: navigationService),
       ],
       child: MyApp(),

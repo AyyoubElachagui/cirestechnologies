@@ -1,4 +1,5 @@
 import 'package:jiffy/jiffy.dart';
+import 'package:flutter/material.dart';
 
 class RenderDate{
   final String date;
@@ -46,5 +47,11 @@ class RenderDate{
     var dateString = Jiffy(_date, "yyyy-MM-dd").startOf(Units.DAY).fromNow().toString();
     return dateString;
   }
+
+  String dateTime({required String dateTime}){
+    String _date = Jiffy(dateTime).format("dd MMM yyyy").toString();
+    return _date;
+  }
+
 
 }

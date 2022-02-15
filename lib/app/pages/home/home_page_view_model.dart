@@ -50,6 +50,8 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsTechnology = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }

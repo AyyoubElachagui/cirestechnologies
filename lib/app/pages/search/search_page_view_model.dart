@@ -3,6 +3,7 @@ import 'package:cirestechnologies/app/routing/routes.dart';
 import 'package:cirestechnologies/app/utils/toast_widget.dart';
 import 'package:cirestechnologies/data/model/news_model.dart';
 import 'package:cirestechnologies/data/repository/news_repository.dart';
+import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,28 @@ class SearchPageViewModel extends ChangeNotifier {
   ];
 
   int indexCatSelected = 0;
+  DateTime selectedDate = DateTime.now();
+
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      builder: (BuildContext? context, Widget? child){
+        return Theme(
+          data: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.fromSwatch(
+            primaryColorDark: AppColors.primary,
+          )
+          ), child: child!,
+        );
+      },
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+        selectedDate = picked;
+    notifyListeners();
+  }
 
 
   final newsRepository = NewsRepository();
@@ -38,6 +61,8 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -49,6 +74,8 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -61,6 +88,8 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -74,6 +103,8 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -86,6 +117,8 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -98,9 +131,16 @@ class SearchPageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNews = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
+    notifyListeners();
+  }
+
+  void filterList({required String dateComp}){
+    listNews.sort((a,b) => dateComp.compareTo(a.date!.split(",")[0]));
     notifyListeners();
   }
 
@@ -130,8 +170,7 @@ class SearchPageViewModel extends ChangeNotifier {
   }
 
   void filterByAuthor(String v){
-    listNews.clear();
-    listNews = listNews.where((e) => e.author == v).toList();
+    listNews = listNews.where((e) => e.author!.toLowerCase() == v.toLowerCase()).toList();
     notifyListeners();
   }
 

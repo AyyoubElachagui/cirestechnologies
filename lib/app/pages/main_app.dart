@@ -52,6 +52,7 @@ class _MainAppState extends State<MainApp> {
 
     return Scaffold(
       backgroundColor: AppColors.white,
+      key: Provider.of<GlobalKey<ScaffoldState>>(context, listen: true),
       drawer: Drawer(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -61,7 +62,7 @@ class _MainAppState extends State<MainApp> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: Image.asset(ImageAssets.fakeUser, width: 150, height: 150, fit: BoxFit.cover,),
+                child: Image.asset(ImageAssets.me, width: 150, height: 150, fit: BoxFit.cover,),
               ),
               InkWell(
                 onTap: (){

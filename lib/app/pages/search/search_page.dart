@@ -1,12 +1,11 @@
 import 'package:cirestechnologies/app/pages/search/search_page_view_model.dart';
-import 'package:cirestechnologies/app/screens/bottom_menu/bottom_menu_view_factory.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:cirestechnologies/app/utils/render_date.dart';
 import 'package:cirestechnologies/app/widgets/loading/loading_widget.dart';
 import 'package:cirestechnologies/app/widgets/search_news_card/search_news_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   final SearchPageViewModel viewModel;
@@ -29,6 +28,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> key = Provider.of<GlobalKey<ScaffoldState>>(context, listen: true);
     return Container(
         color: AppColors.white,
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -40,12 +40,7 @@ class _SearchPageState extends State<SearchPage> {
                 padding: EdgeInsets.symmetric(vertical: 40, horizontal: 0),
                 child: IconButton(
                   padding: EdgeInsets.all(0),
-                  onPressed: () {
-                    SharedPreferences.getInstance()
-                        .then((value) => value.clear());
-                    //widget.viewModel
-                    //.navigateToOnbroadingPage();
-                  },
+                  onPressed: () => key.currentState!.openDrawer() ,
                   icon: Icon(
                     Icons.menu,
                     color: AppColors.black,
@@ -83,6 +78,15 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     TextFormField(
                       controller: widget.viewModel.filter,
+                      textInputAction: TextInputAction.go,
+                      onFieldSubmitted: (v){
+                        v.isEmpty ? null :
+                        widget.viewModel.filterByAuthor(v);
+                      },
+                      onChanged: (v) async{
+                        v.isNotEmpty ? null :
+                        widget.viewModel.categorySelected(context: context, index: widget.viewModel.indexCatSelected);
+                      },
                       decoration: InputDecoration(
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -100,10 +104,19 @@ class _SearchPageState extends State<SearchPage> {
                             Icons.search,
                             color: AppColors.gray.withOpacity(0.6),
                           ),
-                          suffixIcon: Icon(
-                            Icons.manage_search_rounded,
-                            color: AppColors.gray.withOpacity(0.6),
-                            size: 35,
+                          suffixIcon: IconButton(
+                            onPressed: () async{
+                              await widget.viewModel.selectDate(context);
+                              String _date = widget.viewModel.selectedDate.toString();
+                              _date = _date.split(" ")[0].toString();
+                              String dateString = RenderDate(date: _date).dateTime(dateTime: _date);
+                              widget.viewModel.filterList(dateComp: dateString);
+                            },
+                            icon: Icon(
+                              Icons.manage_search_rounded,
+                              color: AppColors.gray.withOpacity(0.6),
+                              size: 35,
+                            ),
                           )),
                     ),
                     SizedBox(
@@ -184,7 +197,6 @@ class _SearchPageState extends State<SearchPage> {
                                   );
                                 },
                               ),
-                              Text(widget.viewModel.listNews.length.toString()),
                             ],
                           )
                         : Container(

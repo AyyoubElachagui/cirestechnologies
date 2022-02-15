@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
 import 'package:cirestechnologies/data/model/news_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewsCardWidget extends StatelessWidget {
   final NewsModel e;
@@ -18,7 +20,39 @@ class NewsCardWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(
+            child: CachedNetworkImage(
+              width: 210,
+              height: 100,
+              imageUrl: e.imageUrl!.substring(0, e.imageUrl!.length - 1),
+              imageBuilder: (context, imageProvider) =>
+                  Container(
+                    width: 210,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              Colors.red, BlendMode.colorBurn)),
+                    ),
+                  ),
+              placeholder: (context, url) =>
+                  Shimmer.fromColors(
+                    baseColor: AppColors.gray,
+                    highlightColor: AppColors.lightGrayAccent,
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(5),
+                      color: Colors.black26,
+                    ),
+                  ),
+              errorWidget: (context, url, error) =>
+                  Icon(Icons.error),
+            )/*Image.network(
               e.imageUrl!.substring(0, e.imageUrl!.length - 1),
               width: 210,
               height: 100,
@@ -47,7 +81,7 @@ class NewsCardWidget extends StatelessWidget {
                     ),
                   );
                 }
-            ),
+            )*/,
           ),
           SizedBox(
             height: 10,
