@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 80),
       child: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: ClipRRect(
@@ -30,34 +30,25 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Image.asset(ImageAssets.me, width: 150, height: 150, fit: BoxFit.cover,),
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 50,),
             Text(
-              "Firstname: Ayyoub",
+              "Ayyoub El achagui",
               style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.black,
-                fontSize: 18
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.black,
+                  fontSize: 22
               ),
             ),
             SizedBox(height: 20,),
             Text(
-              "Lastname: El Achagui",
+              "Software engineer",
               style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.black,
+                  color: AppColors.lightGray,
                   fontSize: 18
               ),
             ),
-            SizedBox(height: 20,),
-            Text(
-              "Profil: Software engineer",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.black,
-                  fontSize: 18
-              ),
-            ),
-            SizedBox(height: 20,),
+            SizedBox(height: 50,),
             InkWell(
               onTap: (){
                 SharedPreferences.getInstance().then((value) => value.clear());

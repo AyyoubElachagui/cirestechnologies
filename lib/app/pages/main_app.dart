@@ -58,12 +58,31 @@ class _MainAppState extends State<MainApp> {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              SizedBox(height: 50,),
               ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Image.asset(ImageAssets.me, width: 150, height: 150, fit: BoxFit.cover,),
               ),
+              SizedBox(height: 50,),
+              Text(
+                "Ayyoub El achagui",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                    fontSize: 22
+                ),
+              ),
+              SizedBox(height: 10,),
+              Text(
+                "Software engineer",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.lightGray,
+                    fontSize: 18
+                ),
+              ),
+              SizedBox(height: 50,),
               InkWell(
                 onTap: (){
                   SharedPreferences.getInstance().then((value) => value.clear());
@@ -88,6 +107,7 @@ class _MainAppState extends State<MainApp> {
                   ),
                 ),
               ),
+              SizedBox(height: 20,),
               InkWell(
                 onTap: (){
                   SharedPreferences.getInstance().then((value) => value.setBool("auth", false));

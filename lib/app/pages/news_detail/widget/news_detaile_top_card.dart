@@ -41,10 +41,9 @@ class NewsDetaileTopCard extends StatelessWidget {
                         bottomRight: Radius.circular(20),
                       ),
                       image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                              Colors.red, BlendMode.colorBurn)),
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   placeholder: (context, url) => Shimmer.fromColors(

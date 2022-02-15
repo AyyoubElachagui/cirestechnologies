@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cirestechnologies/app/pages/home/home_page_view_model.dart';
 import 'package:cirestechnologies/app/screens/bottom_menu/bottom_menu_view_factory.dart';
@@ -23,6 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int? index;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,8 +38,11 @@ class _HomePageState extends State<HomePage> {
       await widget.viewModel.getListNewsSports(context: context);
       await widget.viewModel.getListNewsBusiness(context: context);
       await widget.viewModel.getListNewsAutomobile(context: context);
+      setState(() => index = widget.viewModel.random(0,widget.viewModel.listNewsScience.length -1));
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +54,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   HomeNewsOfDayWidget(
-                    title: widget.viewModel.listNewsScience[1].title!,
-                    imageUrl: widget.viewModel.listNewsScience[1].imageUrl!,
+                    model : widget.viewModel.listNewsScience[index ?? 2],
                   ),
                   HomeNewsItems(
                     title: "Sciences",

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cirestechnologies/app/routing/navigation_service.dart';
 import 'package:cirestechnologies/app/routing/routes.dart';
 import 'package:cirestechnologies/app/utils/toast_widget.dart';
@@ -28,6 +30,8 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsStarUp = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -39,6 +43,8 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsScience = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -64,6 +70,8 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsSport = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -75,6 +83,8 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsBusiness = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
@@ -86,10 +96,16 @@ class HomePageViewModel extends ChangeNotifier {
     if(data["success"] == true){
       List<dynamic> data1 = data["data"];
       listNewsAutoMobile = data1.map((e) => NewsModel.fromJson(e)).toList();
+      notifyListeners();
+      return;
     }else{
       toastUtils.launchToast(context: context, title: "Error loading data", icon: Icons.block_outlined, backgroundColor: Colors.red);
     }
     notifyListeners();
+  }
+
+  int random(min, max){
+    return min + Random().nextInt(max - min);
   }
 
   void navigateToNewsDetail({required NewsModel model}){

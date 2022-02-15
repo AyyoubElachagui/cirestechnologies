@@ -140,7 +140,7 @@ class SearchPageViewModel extends ChangeNotifier {
   }
 
   void filterList({required String dateComp}){
-    listNews.sort((a,b) => dateComp.compareTo(a.date!.split(",")[0]));
+    listNews.sort((a,b) => a.date!.split(",")[0].compareTo(dateComp));
     notifyListeners();
   }
 

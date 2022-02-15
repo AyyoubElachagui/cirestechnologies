@@ -145,7 +145,7 @@ class _SearchPageState extends State<SearchPage> {
                                                       .indexCatSelected ==
                                                   widget.viewModel.category
                                                       .indexOf(e)
-                                              ? 2
+                                              ? 3
                                               : 2,
                                           color: widget.viewModel
                                                       .indexCatSelected ==
@@ -158,7 +158,12 @@ class _SearchPageState extends State<SearchPage> {
                                           e,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w700,
-                                            color: AppColors.gray,
+                                              color: widget.viewModel
+                                                  .indexCatSelected ==
+                                                  widget.viewModel.category
+                                                      .indexOf(e)
+                                                  ? AppColors.black
+                                                  : AppColors.lightGray,
                                             fontSize: 18
                                           ),
                                         ),
