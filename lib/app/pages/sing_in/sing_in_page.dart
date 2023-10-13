@@ -1,19 +1,17 @@
 import 'package:cirestechnologies/app/pages/sing_in/sing_in_page_view_model.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SingInPage extends StatefulWidget {
   final SingInPageViewModel viewModel;
 
-  SingInPage({required this.viewModel});
+  const SingInPage({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   _SingInPageState createState() => _SingInPageState();
 }
 
 class _SingInPageState extends State<SingInPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,15 +29,15 @@ class _SingInPageState extends State<SingInPage> {
                   onTap: () {
                     widget.viewModel.navigateToOnbroadingScreenPage();
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back,
                     color: AppColors.gray,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Text(
+                const Text(
                   "Sing In",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -47,7 +45,7 @@ class _SingInPageState extends State<SingInPage> {
                     fontSize: 30,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Form(
@@ -63,7 +61,8 @@ class _SingInPageState extends State<SingInPage> {
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColors.primary),
                           ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                           hintText: 'Username',
                           labelText: 'Username',
                           labelStyle:
@@ -77,7 +76,7 @@ class _SingInPageState extends State<SingInPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextFormField(
                         cursorColor: AppColors.primary,
                         controller: widget.viewModel.password,
@@ -89,23 +88,31 @@ class _SingInPageState extends State<SingInPage> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColors.gray),
                           ),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: AppColors.primary),
                           ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
                           hintText: 'Password',
                           labelText: 'Password',
-                          labelStyle: TextStyle(fontSize: 16, color: AppColors.gray),
+                          labelStyle: const TextStyle(
+                              fontSize: 16, color: AppColors.gray),
                           suffixIcon: IconButton(
-                            icon: Icon(!widget.viewModel.passwordVisible ? Icons.visibility : Icons.visibility_off, color: AppColors.primary,),
-                            onPressed: () => widget.viewModel.showHidePassword(),
+                            icon: Icon(
+                              !widget.viewModel.passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: AppColors.primary,
+                            ),
+                            onPressed: () =>
+                                widget.viewModel.showHidePassword(),
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -113,27 +120,26 @@ class _SingInPageState extends State<SingInPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Checkbox(
-                                  value: widget.viewModel.rememberMe,
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      widget.viewModel.rememberMe = newValue!;
-                                    });
-                                  }),
-                              Container(
-                                child: Text(
-                                  "Remember me",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                value: widget.viewModel.rememberMe,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    widget.viewModel.rememberMe = newValue!;
+                                  });
+                                },
+                              ),
+                              const Text(
+                                "Remember me",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
-                          Text(
+                          const Text(
                             "Forget password ?",
                             style: TextStyle(
                               color: AppColors.primary,
@@ -141,35 +147,33 @@ class _SingInPageState extends State<SingInPage> {
                           )
                         ],
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
                         width: MediaQuery.of(context).size.width,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             primary: AppColors.primary,
-                            padding: EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
                           ),
                           onPressed: () => widget.viewModel.login(context),
-                          child: Text('LOGIN'),
+                          child: const Text('LOGIN'),
                         ),
                       ),
-                      SizedBox(height: 15),
-                      Center(
-                        child: Container(
-                          child: Text.rich(TextSpan(children: [
-                            TextSpan(
-                              text: "Don't have one ? ",
-                              style: TextStyle(color: AppColors.gray),
-                            ),
-                            TextSpan(
-                              text: " Sing up",
-                              style: TextStyle(color: AppColors.primary),
-                            ),
-                          ])),
-                        ),
+                      const SizedBox(height: 15),
+                      const Center(
+                        child: Text.rich(TextSpan(children: [
+                          TextSpan(
+                            text: "Don't have one ? ",
+                            style: TextStyle(color: AppColors.gray),
+                          ),
+                          TextSpan(
+                            text: " Sing up",
+                            style: TextStyle(color: AppColors.primary),
+                          ),
+                        ])),
                       )
                     ],
                   ),
@@ -181,5 +185,4 @@ class _SingInPageState extends State<SingInPage> {
       ),
     );
   }
-
 }

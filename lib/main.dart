@@ -12,11 +12,7 @@ void main() async {
   final GlobalKey<ScaffoldState> key = GlobalKey();
 
   final bottomMenuViewModel = BottomMenuViewModel(
-    navigationService: navigationService,
-    currentIndex: 0
-  );
-
-
+      navigationService: navigationService, currentIndex: 0);
 
   runApp(
     MultiProvider(

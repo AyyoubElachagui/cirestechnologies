@@ -1,4 +1,3 @@
-import 'package:cirestechnologies/app/pages/main_app.dart';
 import 'package:cirestechnologies/app/routing/app_router.dart';
 import 'package:cirestechnologies/app/routing/navigation_service.dart';
 import 'package:flutter/material.dart';

@@ -10,11 +10,13 @@ class NewsDetailPageFactory {
     final data = settings!.arguments as List;
     String categoryTitle = data[0];
     NewsModel newsDetail = data[1];
+    String indexHero = '${newsDetail.title}';
     return ChangeNotifierProvider<NewsDetailPageViewModel>(
       create: (context) {
         return NewsDetailPageViewModel(
           navigationService:
-          Provider.of<NavigationService>(context, listen: false),
+              Provider.of<NavigationService>(context, listen: false),
+          indexHero: indexHero,
           newsDetail: newsDetail,
           categoryTitle: categoryTitle,
         );

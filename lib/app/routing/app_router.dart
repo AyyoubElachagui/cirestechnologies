@@ -51,7 +51,32 @@ class AppRouter {
         return null;
     }
 
-    return MaterialPageRoute(builder: (_) => page!, settings: settings);
+    return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 600),
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return page!;
+      },
+      transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
+        return Align(
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
+      settings: settings,
+    );
+
+    // return MaterialPageRoute(builder: (_) => page!, settings: settings);
   }
 
   static Widget buildSplashPage() {

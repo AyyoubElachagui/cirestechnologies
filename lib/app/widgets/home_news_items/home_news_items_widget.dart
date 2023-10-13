@@ -1,7 +1,6 @@
 import 'package:cirestechnologies/app/routing/navigation_service.dart';
 import 'package:cirestechnologies/app/routing/routes.dart';
 import 'package:cirestechnologies/app/style/app_colors.dart';
-import 'package:cirestechnologies/app/utils/render_date.dart';
 import 'package:cirestechnologies/app/widgets/news_card/news_card_widget.dart';
 import 'package:cirestechnologies/data/model/news_model.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +9,24 @@ class HomeNewsItems extends StatelessWidget {
   String title;
   List<NewsModel> listNews;
 
-  HomeNewsItems({required this.listNews, required this.title});
+  HomeNewsItems({Key? key, required this.listNews, required this.title})
+      : super(key: key);
 
   late NavigationService navigationService = NavigationService();
 
-  void navigateToNewsDetail(
-      {required NewsModel model, required String category}) {
-    navigationService
-        .navigateTo(routeName: Routes.newsDetail, data: [category, model]);
+  void navigateToNewsDetail({
+    required NewsModel model,
+    required String category,
+    required String indexHero,
+  }) {
+    navigationService.navigateTo(
+        routeName: Routes.newsDetail, data: [category, model, indexHero]);
   }
 
-  void navigateToListNews(
-      {required List<NewsModel> listModel, required String category}) {
+  void navigateToListNews({
+    required List<NewsModel> listModel,
+    required String category,
+  }) {
     navigationService
         .navigateTo(routeName: Routes.listNews, data: [category, listModel]);
   }
@@ -34,28 +39,35 @@ class HomeNewsItems extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(title,
-                        style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.black)),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.black,
+                      ),
+                    ),
                     InkWell(
-                      onTap: () => navigateToListNews(listModel: listNews, category: title),
-                      child: Text("More",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.black)),
+                      onTap: () => navigateToListNews(
+                          listModel: listNews, category: title),
+                      child: const Text(
+                        "More",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 SingleChildScrollView(
@@ -64,16 +76,17 @@ class HomeNewsItems extends StatelessWidget {
                   child: Row(
                     children: [
                       ...listNews.map((e) {
-                        String firstDate = e.date!.split(",")[0];
-                        String monthName = firstDate.split(' ')[1];
-                        String dateString = RenderDate(date: e.date!)
-                            .jiffyDate(monthName: monthName);
-                        return InkWell(
-                          onTap: () =>
-                              navigateToNewsDetail(category: title, model: e),
-                          child: NewsCardWidget(
-                            e: e,
-                            dateString: dateString,
+                        return Hero(
+                          tag: '${listNews.indexOf(e)}$title',
+                          child: InkWell(
+                            onTap: () => navigateToNewsDetail(
+                                category: title,
+                                model: e,
+                                indexHero: '${listNews.indexOf(e)}$title'),
+                            child: NewsCardWidget(
+                              e: e,
+                              dateString: '${e.date}',
+                            ),
                           ),
                         );
                       }).toList()

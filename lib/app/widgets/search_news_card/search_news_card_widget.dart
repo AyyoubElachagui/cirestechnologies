@@ -19,36 +19,33 @@ class SearchNewsCardWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    e.imageUrl!,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.lightGrayAccent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1,
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
+                  child: Image.network(e.imageUrl!,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover, loadingBuilder: (BuildContext context,
+                          Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.lightGrayAccent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
                                     loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            ),
+                                : null,
                           ),
-                        );
-                      }
-                  ),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Expanded(
@@ -57,12 +54,12 @@ class SearchNewsCardWidget extends StatelessWidget {
                       Text(
                         e.title!,
                         maxLines: 2,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                             color: AppColors.black),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -70,35 +67,39 @@ class SearchNewsCardWidget extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.access_time,
                                 color: AppColors.lightGray,
                                 size: 15,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 dateString,
-                                style: TextStyle(
-                                    color: AppColors.lightGray, fontSize: 13),
+                                style: const TextStyle(
+                                  color: AppColors.lightGray,
+                                  fontSize: 11,
+                                ),
                               )
                             ],
                           ),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.remove_red_eye_outlined,
                                 color: AppColors.lightGray,
                                 size: 15,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 e.content!.length.toString() + " views",
-                                style: TextStyle(
-                                    color: AppColors.lightGray, fontSize: 13),
+                                style: const TextStyle(
+                                  color: AppColors.lightGray,
+                                  fontSize: 11,
+                                ),
                               )
                             ],
                           ),
@@ -109,7 +110,7 @@ class SearchNewsCardWidget extends StatelessWidget {
                 )
               ],
             )),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ],
